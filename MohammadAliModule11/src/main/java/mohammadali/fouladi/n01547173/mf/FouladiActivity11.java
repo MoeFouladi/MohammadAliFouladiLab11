@@ -1,6 +1,10 @@
 package mohammadali.fouladi.n01547173.mf;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,8 +33,10 @@ public class FouladiActivity11 extends AppCompatActivity {
         });
 
         ArrayList<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new HomeFragmentMohammadAli());
-        fragmentList.add(new SettingsFragmentFouladi());
+        fragmentList.add(new Moe());
+        fragmentList.add(new Fouladi());
+        fragmentList.add(new N01547173());
+        fragmentList.add(new Mf());
 
         ViewPager2 viewPager = findViewById(R.id.MoeviewPager);
         viewPager.setAdapter(new ViewPagerAdapter(this, fragmentList));
@@ -41,14 +47,40 @@ public class FouladiActivity11 extends AppCompatActivity {
                     // Customize the tab name based on position/index
 
                     if(position== 0)
-                    { tab.setText("Home");}
+                    { tab.setText("Moe");
+                    tab.setIcon(R.drawable.moe);}
+
                     else if(position== 1)
 
-                    {   tab.setText("Settings");}
+
+                    {   tab.setText("Fouladi");
+                    tab.setIcon(R.drawable.fouladi);}
+                    else if(position== 2)
+                        {   tab.setText("N01547173");
+                        tab.setIcon(R.drawable.n01547173);}
+                    else if(position== 3)
+                    {   tab.setText("Mf");
+                    tab.setIcon(R.drawable.mf);
+                    }
 
 
                 }
         ).attach();
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_contact) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
