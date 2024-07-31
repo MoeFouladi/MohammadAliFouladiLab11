@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--MohammadAli n01547173-->
 <resources>
     <color name="black">#FF000000</color>
+    <color name="Other">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tabTextInactiveColor">#808080</color>
+    <color name="gray">#d3d3d3</color>
+    <color name="tabTextActiveColor">#ffffff</color>
+    <color name="tabIndicatorColor">#FF0000</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="Green">#00FF00</color>
+    <color name="Red">#FF0000</color>
+    <color name="Yellow">#FFFF00</color>
 </resources>
+
+
+
