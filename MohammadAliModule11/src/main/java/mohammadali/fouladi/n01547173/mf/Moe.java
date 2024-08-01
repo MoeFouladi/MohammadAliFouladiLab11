@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class Moe extends Fragment {
-
+    // Mohammad Ali Fouladi N01547173
     Button buttonAddCourse;
     Button buttonDelete;
     EditText editTextCourseName, editTextCourseDescription;

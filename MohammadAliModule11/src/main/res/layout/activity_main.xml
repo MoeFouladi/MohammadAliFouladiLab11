@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".FouladiActivity11">
-
+    <!--Mohammaddali Fouladi n01547173 -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:title="@string/app_name"

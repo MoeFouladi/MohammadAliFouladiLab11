@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".Moe">
-
+    <!-- Mohammod Ali Fouladi n01547173 -->
     <TextView
         android:id="@+id/MoeFullName"
         android:layout_width="wrap_content"

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
-
+// Mohammad Ali Fouladi N01547173
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
 
     private ArrayList<Course> courseList;

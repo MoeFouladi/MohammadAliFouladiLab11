@@ -31,8 +31,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 
 public class FouladiActivity11 extends AppCompatActivity {
-    private static final int REQUEST_READ_CONTACTS = 100;
-
+    // Mohammad Ali Fouladi N01547173
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -3,7 +3,7 @@
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-
+        <!-- Mohammad Ali Fouladi N01547173-->
     </style>
     <style name="TabLayoutTextStyle" parent="TextAppearance.Design.Tab" />
     <style name="Theme.MohammadAliLab111" parent="Base.Theme.MohammadAliLab111" />

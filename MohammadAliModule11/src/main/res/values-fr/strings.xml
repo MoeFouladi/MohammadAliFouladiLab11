@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MohammadAliLab111</string>
+    <!-- Mohammad Ali Fouladi N01547173-->
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Bonjour  fragment blanche</string>
+    <string name="contacts">Contacts</string>
+    <string name="NameID">MohammadAli Fouladi N01547173</string>
+    <string name="ceng_258">CENG-258</string>
+    <string name="enter_course_description">Entrez la description du cours</string>
+    <string name="alloweddescription">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,.-\'</string>
+    <string name="add">Ajouter</string>
+    <string name="delete">Supprimer</string>
+    <string name="course_added">Cours ajouté</string>
+    <string name="no_courses_to_delete">Aucun cours à supprimer</string>
+    <string name="all_courses_deleted">Tous les cours supprimés</string>
+    <string name="InvalidName">Modèle de nom de cours non valide. Doit être composé de 3 lettres majuscules suivies de 3 ou 4 chiffres.</string>
+    <string name="course_name_is_required">Le nom du cours est obligatoire</string>
+    <string name="course_description_is_required">Une description du cours est requise</string>
+    <string name="title_activity_fouladi">Fouladi</string>
+    <string name="Fullnameid">Mohammad Ali Fouladi N01547173</string>
+    <string name="name">Mohammad Ali</string>
+    <string name="humber_college">Humber College</string>
+    <string name="toronto">"Toronto "</string>
+</resources>
