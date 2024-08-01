@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797377354612",
+    "project_id": "mohammadalilab111",
+    "storage_bucket": "mohammadalilab111.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797377354612:android:163f59d9734b960a1f2a21",
+        "android_client_info": {
+          "package_name": "mohammadali.fouladi.n01547173.mf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFBiziE9D3ZvzFaztCEr0v4H4RjRMiqCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

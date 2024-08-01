@@ -81,7 +81,8 @@ public class FouladiActivity11 extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_contacts) {
-            Log.d("FouladiActivity11", "Contacts menu item clicked");
+            //still doesn't work
+//            Log.d("FouladiActivity11", "Contacts menu item clicked");
 
             Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
             startActivity(intent);

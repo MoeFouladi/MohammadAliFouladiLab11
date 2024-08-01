@@ -15,4 +15,9 @@
     <string name="InvalidName">Invalid course name pattern. Must be 3 uppercase letters followed by 3 or 4 digits.</string>
     <string name="course_name_is_required">Course name is required</string>
     <string name="course_description_is_required">Course description is required</string>
+    <string name="title_activity_fouladi">Fouladi</string>
+    <string name="Fullnameid">Mohammad Ali Fouladi N01547173</string>
+    <string name="name">Mohammad Ali</string>
+    <string name="humber_college">Humber College</string>
+    <string name="toronto">"Toronto "</string>
 </resources>
