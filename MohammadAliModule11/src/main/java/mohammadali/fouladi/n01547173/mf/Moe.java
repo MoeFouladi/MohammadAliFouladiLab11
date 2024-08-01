@@ -94,17 +94,17 @@ public class Moe extends Fragment {
 
 
         if (name.isEmpty()) {
-            editTextCourseName.setError("Course name is required");
+            editTextCourseName.setError(getString(R.string.course_name_is_required));
             return;
         } else if (!Pattern.matches(namePattern, name)) {
-            editTextCourseName.setError("Invalid course name pattern. Must be 3 uppercase letters followed by 3 or 4 digits.");
+            editTextCourseName.setError(getString(R.string.InvalidName));
             return;
         } else {
             editTextCourseName.setError(null);
         }
 
         if (description.isEmpty()) {
-            editTextCourseDescription.setError("Course description is required");
+            editTextCourseDescription.setError(getString(R.string.course_description_is_required));
             return;
         } else {
             editTextCourseDescription.setError(null);
@@ -113,16 +113,16 @@ public class Moe extends Fragment {
         String id = databaseCourses.push().getKey();
         Course course = new Course(name, description);
         databaseCourses.child(id).setValue(course);
-        Toast.makeText(getContext(), "Course added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.course_added, Toast.LENGTH_SHORT).show();
         editTextCourseName.setText("");
         editTextCourseDescription.setText("");
     }
     private void deleteAllCourses() {
         if (courseList.isEmpty()) {
-            Toast.makeText(getContext(), "No courses to delete", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.no_courses_to_delete, Toast.LENGTH_SHORT).show();
         } else {
             databaseCourses.removeValue();
-            Toast.makeText(getContext(), "All courses deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.all_courses_deleted, Toast.LENGTH_SHORT).show();
         }
     }
 }

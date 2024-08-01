@@ -23,15 +23,15 @@
         android:layout_height="wrap_content"
         android:inputType="text"
 
-        android:hint="CENG-258"/>
+        android:hint="@string/ceng_258"/>
 
 
     <EditText
         android:id="@+id/MoecourseDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter course description"
-        android:inputType="text|textFilter"
+        android:hint="@string/enter_course_description"
+        android:digits="@string/alloweddescription"
 />
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             android:id="@+id/MoeaddCourse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add"
+            android:text="@string/add"
             android:backgroundTint="@color/lavender"
             android:textColor="@color/white" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/MoeDeleteCourse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="@string/delete"
             android:backgroundTint="@color/lavender"
             android:textColor="@color/white" />
     </LinearLayout>
