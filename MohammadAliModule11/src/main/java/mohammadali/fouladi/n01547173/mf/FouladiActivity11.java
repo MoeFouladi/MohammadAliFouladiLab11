@@ -1,6 +1,7 @@
     package mohammadali.fouladi.n01547173.mf;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -8,9 +9,16 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+import android.Manifest;
+
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,12 +31,17 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 
 public class FouladiActivity11 extends AppCompatActivity {
+    private static final int REQUEST_READ_CONTACTS = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -80,13 +93,20 @@ public class FouladiActivity11 extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_contacts) {
+        if (item.getItemId() == R.id.action_open_contacts) {
             //still doesn't work
-//            Log.d("FouladiActivity11", "Contacts menu item clicked");
+            Log.d("FouladiActivity11", "Contacts menu item clicked");
 
-            Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
-            startActivity(intent);
+            openContacts();
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+    private void openContacts() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
+            startActivity(intent);
+      }
 }
