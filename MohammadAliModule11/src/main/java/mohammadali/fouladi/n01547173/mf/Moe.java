@@ -50,7 +50,7 @@ public class Moe extends Fragment {
 
         recyclerViewCourses.setLayoutManager(new LinearLayoutManager(getContext()));
         courseList = new ArrayList<>();
-        courseAdapter = new CourseAdapter((ArrayList<Course>) courseList);
+        courseAdapter = new CourseAdapter((ArrayList<Course>) courseList,databaseCourses);
         recyclerViewCourses.setAdapter(courseAdapter);
         editTextCourseName.setFilters(new InputFilter[] { new InputFilter.AllCaps() });
 
@@ -71,9 +71,12 @@ public class Moe extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 courseList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Course course = postSnapshot.getValue(Course.class);
-                    courseList.add(course);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Course course = snapshot.getValue(Course.class);
+                    if (course != null) {
+                        course.setId(snapshot.getKey());  // Ensure the ID is set
+                        courseList.add(course);
+                    }
                 }
                 courseAdapter.notifyDataSetChanged();
             }
@@ -111,7 +114,7 @@ public class Moe extends Fragment {
         }
 
         String id = databaseCourses.push().getKey();
-        Course course = new Course(name, description);
+        Course course = new Course(id,name, description);
         databaseCourses.child(id).setValue(course);
         Toast.makeText(getContext(), R.string.course_added, Toast.LENGTH_SHORT).show();
         editTextCourseName.setText("");

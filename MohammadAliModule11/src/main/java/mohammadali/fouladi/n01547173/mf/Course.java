@@ -3,12 +3,14 @@ package mohammadali.fouladi.n01547173.mf;
 public class Course {
     private String name;
     private String description;
+    private String id;
 
     public Course() {
-        // Default constructor required for calls to DataSnapshot.getValue(Course.class)
     }
 
-    public Course(String name, String description) {
+    public Course( String id,String name, String description) {
+        this.id = id;
+
         this.name = name;
         this.description = description;
     }
@@ -16,8 +18,15 @@ public class Course {
     public String getName() {
         return name;
     }
-
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getDescription() {
         return description;
     }
+
+    public String getId() {
+        return id;
+    }
 }
+

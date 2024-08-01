@@ -1,19 +1,26 @@
 package mohammadali.fouladi.n01547173.mf;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.ArrayList;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
 
     private ArrayList<Course> courseList;
+    private DatabaseReference databaseCourses;
 
-    public CourseAdapter(ArrayList<Course> courseList) {
+    public CourseAdapter(ArrayList<Course> courseList, DatabaseReference databaseCourses) {
         this.courseList = courseList;
+        this.databaseCourses = databaseCourses;
+
     }
 
     @NonNull
@@ -28,11 +35,29 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         Course course = courseList.get(position);
         holder.textViewCourseName.setText(course.getName());
         holder.textViewCourseDescription.setText(course.getDescription());
+        holder.itemView.setOnLongClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                Course currentCourse = courseList.get(pos);
+                deleteCourse(currentCourse.getId(), pos);
+            }
+            return true;
+        });
     }
 
     @Override
     public int getItemCount() {
         return courseList.size();
+    }
+    private void deleteCourse(String courseId, int position) {
+        if (courseId != null && !courseId.isEmpty()) {
+            databaseCourses.child(courseId).removeValue();
+            courseList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, courseList.size());
+        } else {
+            Log.e("CourseAdapter", "Cannot delete a course with null ID");
+        }
     }
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
