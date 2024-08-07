@@ -28,6 +28,7 @@ import java.util.List;
  * Use the {@link N01547173#newInstance} factory method to
  * create an instance of this fragment.
  */
+// Mohammad Ali Fouladi n01547173
 public class N01547173 extends Fragment {
     // Mohammad Ali Fouladi N01547173
     // TODO: Rename parameter arguments, choose names that match
@@ -117,7 +118,7 @@ public class N01547173 extends Fragment {
             @Override
             public void onAdClicked() {
                 adClickCounter++;
-                Toast.makeText(getContext(), getString(R.string.name) + " Click count: " + adClickCounter, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.name) + getString(R.string.click_count) + adClickCounter, Toast.LENGTH_SHORT).show();
             }
         });
 

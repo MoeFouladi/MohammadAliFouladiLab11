@@ -16,9 +16,11 @@
         android:textColor="@android:color/holo_blue_dark"
         android:layout_gravity="center"
         android:padding="8dp" />
+    <!--Mohammaddali Fouladi n01547173 -->
 
     <Spinner
         android:id="@+id/MoewebsiteSpinner"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

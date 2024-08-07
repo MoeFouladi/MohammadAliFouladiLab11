@@ -40,6 +40,7 @@
     <string name="phone_number_must_be_10_digits">Phone number must be 10 digits</string>
     <string name="message_cannot_be_empty">Message cannot be empty</string>
     <string name="sms_sent">SMS sent</string>
+    <string name="click_count">" Click count: "</string>
 
     <string-array name="websites_array">
         <item>CBC</item>
