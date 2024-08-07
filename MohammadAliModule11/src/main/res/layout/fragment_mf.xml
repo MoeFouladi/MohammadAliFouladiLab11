@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Mf">
-    <!--Mohamdali Fouladi n01547173 -->
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    android:orientation="vertical"
+    android:padding="16dp">
 
-</FrameLayout>
+
+
+    <EditText
+        android:id="@+id/MoephoneEditText"
+       android:layout_marginTop="260dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_phone_number"
+        android:inputType="phone"
+        android:maxLength="10"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/MoemessageEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_message" />
+
+    <Button
+        android:id="@+id/MoesendSmsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:text="@string/send_sms"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/MoerotatedTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/moe_rotated_45p"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="bold|italic"
+        android:rotation="45"
+        android:layout_marginStart="90dp"
+
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/MoerotatedTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:rotation="-45"
+        android:layout_marginStart="170dp"
+        android:text="@string/moe_rotated_45"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold|italic" />
+
+</LinearLayout>

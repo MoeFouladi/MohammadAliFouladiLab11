@@ -24,6 +24,21 @@
     <string name="nameShort">Moe Fouladi</string>
     <string name="dismiss">Dismiss</string>
     <string name="welcome_message">Welcome to Lab11</string>
+    <string name="moe_rotated_45">Moe rotated -45</string>
+    <string name="moe_rotated_45p">Moe rotated 45</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="enter_message">Enter message</string>
+    <string name="sms_not_delivered">SMS not delivered</string>
+    <string name="sms_delivered">SMS delivered</string>
+    <string name="radio_off">Radio off</string>
+    <string name="null_pdu">Null PDU</string>
+    <string name="no_service">No service</string>
+    <string name="generic_failure">Generic failure</string>
+    <string name="sms_permission_denied">SMS permission denied</string>
+    <string name="phone_number_cannot_be_empty">Phone number cannot be empty</string>
+    <string name="phone_number_must_be_10_digits">Phone number must be 10 digits</string>
+    <string name="message_cannot_be_empty">Message cannot be empty</string>
 
     <string-array name="websites_array">
         <item>CBC</item>

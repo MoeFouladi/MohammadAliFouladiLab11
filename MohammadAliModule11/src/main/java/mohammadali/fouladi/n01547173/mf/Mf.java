@@ -1,64 +1,154 @@
 package mohammadali.fouladi.n01547173.mf;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Mf#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 public class Mf extends Fragment {
     // Mohammad Ali Fouladi N01547173
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private EditText phoneEditText;
+    private EditText messageEditText;
+    private Button sendSmsButton;
+    private String phoneNumber;
+    private String message;
 
-    public Mf() {
-        // Required empty public constructor
-    }
+    // Permission request code
+    private static final int PERMISSION_REQUEST_SEND_SMS = 1;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Mf.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Mf newInstance(String param1, String param2) {
-        Mf fragment = new Mf();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    // ActivityResultLauncher for requesting SMS permission
+    private ActivityResultLauncher<String> requestPermissionLauncher;
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_mf, container, false);
+
+        phoneEditText = view.findViewById(R.id.MoephoneEditText);
+        messageEditText = view.findViewById(R.id.MoemessageEditText);
+        sendSmsButton = view.findViewById(R.id.MoesendSmsButton);
+
+        // Initialize the permission launcher
+        requestPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                isGranted -> {
+                    if (isGranted) {
+                        // Permission granted, send SMS
+                        sendSMS(phoneNumber, message);
+                    } else {
+                        // Permission denied
+                        Toast.makeText(getContext(), R.string.sms_permission_denied, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        sendSmsButton.setOnClickListener(v -> {
+            phoneNumber = phoneEditText.getText().toString();
+            message = messageEditText.getText().toString();
+
+            // Validate input
+            if (phoneNumber.isEmpty()) {
+                phoneEditText.setError(getString(R.string.phone_number_cannot_be_empty));
+                return;
+            }
+            if (phoneNumber.length() < 10) {
+                phoneEditText.setError(getString(R.string.phone_number_must_be_10_digits));
+                return;
+            }
+            if (message.isEmpty()) {
+                messageEditText.setError(getString(R.string.message_cannot_be_empty));
+                return;
+            }
+
+            // Check SMS permission
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.SEND_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Request permission
+                requestPermissionLauncher.launch(Manifest.permission.SEND_SMS);
+            } else {
+                // Permission already granted, send SMS
+                sendSMS(phoneNumber, message);
+            }
+        });
+
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mf, container, false);
+    private void sendSMS(String phoneNumber, String message) {
+        String SENT = "SMS_SENT";
+        String DELIVERED = "SMS_DELIVERED";
+
+        PendingIntent sentPI = PendingIntent.getBroadcast(requireContext(), 0,
+                new Intent(SENT), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        PendingIntent deliveredPI = PendingIntent.getBroadcast(requireContext(), 0,
+                new Intent(DELIVERED), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        // Register receiver for sending
+        BroadcastReceiver sendBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(getContext(), "SMS sent", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        Toast.makeText(getContext(), R.string.generic_failure, Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        Toast.makeText(getContext(), R.string.no_service, Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        Toast.makeText(getContext(), R.string.null_pdu, Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        Toast.makeText(getContext(), R.string.radio_off, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        };
+
+        requireContext().registerReceiver(sendBroadcastReceiver, new IntentFilter(SENT), Context.RECEIVER_NOT_EXPORTED);
+
+        // Register receiver for delivery
+        BroadcastReceiver deliveryBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(getContext(), R.string.sms_delivered, Toast.LENGTH_SHORT).show();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Toast.makeText(getContext(), R.string.sms_not_delivered, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        };
+
+        requireContext().registerReceiver(deliveryBroadcastReceiver, new IntentFilter(DELIVERED), Context.RECEIVER_NOT_EXPORTED);
+
+        // Send SMS
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
     }
 }
