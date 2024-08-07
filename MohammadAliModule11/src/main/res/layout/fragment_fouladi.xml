@@ -7,7 +7,7 @@
     tools:context=".Fouladi">
 <!-- Mohammad Ali Fouladi n01547173 -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/MaptextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Fullnameid"

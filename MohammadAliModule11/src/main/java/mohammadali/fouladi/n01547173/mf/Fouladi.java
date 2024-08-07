@@ -1,12 +1,19 @@
 package mohammadali.fouladi.n01547173.mf;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,6 +21,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +43,12 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
     private String mParam1;
     private String mParam2;
     private GoogleMap mMap;
+    private TextView locationTextView;
+    private ExecutorService executorService;
+    private Handler handler;
+
+
+
 
     public Fouladi() {
         // Required empty public constructor
@@ -68,7 +86,9 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fouladi, container, false);
-
+        locationTextView = view.findViewById(R.id.MaptextView);
+        executorService = Executors.newSingleThreadExecutor();
+        handler = new Handler(Looper.getMainLooper());
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -82,8 +102,51 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in Humber College, Toronto, and zoom the camera
-        LatLng humber = new LatLng(43.7289, -79.6076); // Example coordinates
+        LatLng humber = new LatLng(43.7289, -79.6076); // Humber location
         mMap.addMarker(new MarkerOptions().position(humber).title(getString(R.string.humber_college)).snippet(getString(R.string.toronto)+getString(R.string.name)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(humber, 15));
+        mMap.setOnMapClickListener(this::handleMapClick);
+
     }
-}
+    private void handleMapClick(LatLng point) {
+        mMap.clear();
+        mMap.addMarker(new MarkerOptions().position(point).title("Selected Location"));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(point));
+        reverseGeocode(point);
+
+    }
+    private void reverseGeocode(LatLng point) {
+        executorService.submit(() -> {
+            Geocoder geocoder = new Geocoder(getContext());
+            List<Address> addresses;
+            String addressText = "";
+
+            try {
+                addresses = geocoder.getFromLocation(point.latitude, point.longitude, 1);
+                if (addresses != null && !addresses.isEmpty()) {
+                    Address address = addresses.get(0);
+                    addressText = String.format("%s, %s, %s",
+                            address.getAddressLine(0),
+                            address.getLocality(),
+                            address.getCountryName());
+                    mMap.addMarker(new MarkerOptions().position(point).title(address.getLocality()));
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String finalAddressText = addressText;
+            handler.post(() -> locationTextView.setText(finalAddressText));
+        });
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (executorService != null) {
+            executorService.shutdown();
+        }
+    }
+
+
+    }
