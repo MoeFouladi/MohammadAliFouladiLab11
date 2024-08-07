@@ -30,7 +30,6 @@ public class Mf extends Fragment {
 
     private EditText phoneEditText;
     private EditText messageEditText;
-    private Button sendSmsButton;
     private String phoneNumber;
     private String message;
 
@@ -47,7 +46,7 @@ public class Mf extends Fragment {
 
         phoneEditText = view.findViewById(R.id.MoephoneEditText);
         messageEditText = view.findViewById(R.id.MoemessageEditText);
-        sendSmsButton = view.findViewById(R.id.MoesendSmsButton);
+        Button sendSmsButton = view.findViewById(R.id.MoesendSmsButton);
 
         // Initialize the permission launcher
         requestPermissionLauncher = registerForActivityResult(
@@ -79,7 +78,7 @@ public class Mf extends Fragment {
                 messageEditText.setError(getString(R.string.message_cannot_be_empty));
                 return;
             }
-
+            // still not asking for charges permission
             // Check SMS permission
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.SEND_SMS)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -95,8 +94,8 @@ public class Mf extends Fragment {
     }
 
     private void sendSMS(String phoneNumber, String message) {
-        String SENT = "SMS_SENT";
-        String DELIVERED = "SMS_DELIVERED";
+        String SENT = getString(R.string.sms_sent);
+        String DELIVERED = getString(R.string.sms_delivered);
 
         PendingIntent sentPI = PendingIntent.getBroadcast(requireContext(), 0,
                 new Intent(SENT), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);

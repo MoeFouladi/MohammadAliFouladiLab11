@@ -93,7 +93,6 @@ public class FouladiActivity11 extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_open_contacts) {
-            //still doesn't work
 //            Log.d("FouladiActivity11", "Contacts menu item clicked");
 
             openContacts();
