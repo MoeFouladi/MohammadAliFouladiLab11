@@ -23,14 +23,14 @@
     <string name="toronto">"Toronto "</string>
     <string-array name="websites_array">
         <item>CBC</item>
-        <item>BBC</item>
-        <item>NYTimes</item>
-        <item>My page</item>
+        <item>BlackBoard</item>
+        <item>CinePlex</item>
+        <item>Local Welcome Page</item>
     </string-array>
     <string-array name="websites_url_array">
         <item>https://www.cbc.ca/</item>
-        <item>https://www.bbc.com/</item>
-        <item>https://www.nytimes.com/</item>
+        <item>https://learn.humber.ca/ultra/stream/</item>
+        <item>https://www.cineplex.com//</item>
         <item>file:///android_asset/welcome.html</item>
     </string-array>
 
