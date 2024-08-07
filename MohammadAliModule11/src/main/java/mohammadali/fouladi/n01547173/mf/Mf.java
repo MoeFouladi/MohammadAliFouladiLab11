@@ -110,7 +110,7 @@ public class Mf extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        Toast.makeText(getContext(), "SMS sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.sms_sent, Toast.LENGTH_SHORT).show();
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                         Toast.makeText(getContext(), R.string.generic_failure, Toast.LENGTH_SHORT).show();

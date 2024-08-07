@@ -117,7 +117,7 @@ public class N01547173 extends Fragment {
             @Override
             public void onAdClicked() {
                 adClickCounter++;
-                Toast.makeText(getContext(), getString(R.string.name) + " Click count: " + adClickCounter, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.name) + " Click count: " + adClickCounter, Toast.LENGTH_SHORT).show();
             }
         });
 
