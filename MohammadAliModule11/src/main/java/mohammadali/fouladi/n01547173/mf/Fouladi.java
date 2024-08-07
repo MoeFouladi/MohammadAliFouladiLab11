@@ -21,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.List;
@@ -110,9 +111,8 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
     }
     private void handleMapClick(LatLng point) {
         mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(point).title("Selected Location"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(point));
         reverseGeocode(point);
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(point));
 
     }
     private void reverseGeocode(LatLng point) {
@@ -129,7 +129,6 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
                             address.getAddressLine(0),
                             address.getLocality(),
                             address.getCountryName());
-                    mMap.addMarker(new MarkerOptions().position(point).title(address.getLocality()));
 
                 }
             } catch (IOException e) {
@@ -138,7 +137,21 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
 
             String finalAddressText = addressText;
             handler.post(() -> locationTextView.setText(finalAddressText));
+            handler.post(() -> showSnackbar(finalAddressText));
+
+            handler.post(() -> mMap.addMarker(new MarkerOptions().position(point).title(getString(R.string.nameShort)).snippet(finalAddressText)) );
+            handler.post(() -> mMap.animateCamera(CameraUpdateFactory.newLatLng(point)));
+
         });
+    }
+    private void showSnackbar(String message) {
+        View view = getView();
+        if (view != null) {
+            Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Dismiss", v -> snackbar.dismiss());
+
+            snackbar.show();
+        }
     }
     @Override
     public void onDestroy() {
