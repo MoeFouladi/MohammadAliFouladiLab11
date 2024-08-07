@@ -4,37 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:background="@color/light_purple"
     android:orientation="vertical"
+    android:background="@color/light_purple"
     tools:context=".N01547173">
 
-    <!-- TextView displaying the welcome message -->
     <TextView
-        android:id="@+id/welcomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_message"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="18sp"
+        android:text="@string/Fullnameid"
         android:textStyle="bold|italic"
-        android:layout_gravity="center"/>
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_gravity="center"
+        android:padding="8dp" />
 
-    <!-- Spinner for selecting websites -->
     <Spinner
-        android:id="@+id/websiteSpinner"
+        android:id="@+id/MoewebsiteSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- WebView for displaying websites -->
     <WebView
-        android:id="@+id/webView"
+        android:id="@+id/MoewebView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
-    <!-- AdMob Banner Ad -->
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+        android:id="@+id/MoeadView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"

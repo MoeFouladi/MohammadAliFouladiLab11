@@ -24,4 +24,18 @@
     <string name="nameShort">Moe Fouladi</string>
     <string name="dismiss">Dismiss</string>
     <string name="welcome_message">Welcome to Lab11</string>
+
+    <string-array name="websites_array">
+        <item>CBC</item>
+        <item>BlackBoard</item>
+        <item>CinePlex</item>
+        <item>Local Welcome Page</item>
+    </string-array>
+
+    <string-array name="websites_url_array">
+        <item>https://www.cbc.ca/</item>
+        <item>https://learn.humber.ca/ultra/stream/</item>
+        <item>https://www.cineplex.com//</item>
+        <item>file:///android_asset/welcome.html</item>
+    </string-array>
 </resources>

@@ -7,6 +7,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +38,9 @@ public class N01547173 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private WebView webView;
+    private AdView adView;
+    private int adClickCounter = 0;
 
     public N01547173() {
         // Required empty public constructor
@@ -59,6 +77,64 @@ public class N01547173 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_n01547173, container, false);
+        View view = inflater.inflate(R.layout.fragment_n01547173, container, false);
+
+        Spinner websiteSpinner = view.findViewById(R.id.MoewebsiteSpinner);
+        webView = view.findViewById(R.id.MoewebView);
+        adView = view.findViewById(R.id.MoeadView);
+
+        // Spinner with website names
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.websites_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        websiteSpinner.setAdapter(adapter);
+
+        websiteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Get selected website URL
+                String selectedWebsite = getResources().getStringArray(R.array.websites_url_array)[position];
+                loadWebsite(selectedWebsite);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        // Initialize Mobile Ads SDK
+        MobileAds.initialize(getContext(), initializationStatus -> {});
+
+        List<String> testDeviceIds = Arrays.asList(AdRequest.DEVICE_ID_EMULATOR, "B3EEABB8EE11C2BE770B684D95219ECB");
+        RequestConfiguration configuration = new RequestConfiguration.Builder()
+                .setTestDeviceIds(testDeviceIds)
+                .build();
+        MobileAds.setRequestConfiguration(configuration);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
+        adView.setAdListener(new com.google.android.gms.ads.AdListener() {
+            @Override
+            public void onAdClicked() {
+                adClickCounter++;
+                Toast.makeText(getContext(), getString(R.string.name) + " Click count: " + adClickCounter, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return view;
+    }
+    private void loadWebsite(String url) {
+        // Configure the WebView
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+
+        if (url.equals("file:///android_asset/welcome.html")) {
+            // Load local HTML file initially
+            webView.loadUrl(url);
+        } else {
+            // Load external website
+            webView.loadUrl(url);
+        }
     }
 }
