@@ -1,11 +1,18 @@
 package mohammadali.fouladi.n01547173.mf;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -34,12 +41,13 @@ import java.util.concurrent.Executors;
  * create an instance of this fragment.
  */
 public class Fouladi extends Fragment implements OnMapReadyCallback {
-//      Mohammad Ali Fouladi N01547173
+    //      Mohammad Ali Fouladi N01547173
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final String CHANNEL_ID = "location_channel";
+    private static final int NOTIFICATION_ID = 1;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -47,8 +55,6 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
     private TextView locationTextView;
     private ExecutorService executorService;
     private Handler handler;
-
-
 
 
     public Fouladi() {
@@ -90,31 +96,37 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
         locationTextView = view.findViewById(R.id.MaptextView);
         executorService = Executors.newSingleThreadExecutor();
         handler = new Handler(Looper.getMainLooper());
+        createNotificationChannel();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         if (mapFragment != null) {
-            mapFragment.getMapAsync( this);
+            mapFragment.getMapAsync(this);
         }
 
-        return view;    }
+        return view;
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         // Add a marker in Humber College, Toronto, and zoom the camera
         LatLng humber = new LatLng(43.7289, -79.6076); // Humber location
-        mMap.addMarker(new MarkerOptions().position(humber).title(getString(R.string.humber_college)).snippet(getString(R.string.toronto)+getString(R.string.name)));
+        mMap.addMarker(new MarkerOptions().position(humber).title(getString(R.string.humber_college)).snippet(getString(R.string.toronto) + getString(R.string.name)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(humber, 15));
         mMap.setOnMapClickListener(this::handleMapClick);
 
     }
+
     private void handleMapClick(LatLng point) {
         mMap.clear();
         reverseGeocode(point);
         mMap.animateCamera(CameraUpdateFactory.newLatLng(point));
 
     }
+
     private void reverseGeocode(LatLng point) {
         executorService.submit(() -> {
             Geocoder geocoder = new Geocoder(getContext());
@@ -136,19 +148,56 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
             }
 
             String finalAddressText = addressText;
-            handler.post(() -> locationTextView.setText(finalAddressText));
-            handler.post(() -> showSnackbar(finalAddressText));
+            handler.post(() -> {
+                locationTextView.setText(finalAddressText);
+                showSnackbar(finalAddressText);
 
-            handler.post(() -> mMap.addMarker(new MarkerOptions().position(point).title(getString(R.string.nameShort)).snippet(finalAddressText)) );
-            handler.post(() -> mMap.animateCamera(CameraUpdateFactory.newLatLng(point)));
+                mMap.addMarker(new MarkerOptions().position(point).title(getString(R.string.nameShort)).snippet(finalAddressText));
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(point));
+                showNotification(finalAddressText);
 
+            });
         });
+    }
+
+    private void showNotification(String message) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification)  // Replace with your notification icon
+                .setContentTitle("Location Address")
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Location Channel";
+            String description = "Channel for displaying location addresses";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
     private void showSnackbar(String message) {
         View view = getView();
         if (view != null) {
             Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction("Dismiss", v -> snackbar.dismiss());
+            snackbar.setAction(R.string.dismiss, v -> snackbar.dismiss());
 
             snackbar.show();
         }
