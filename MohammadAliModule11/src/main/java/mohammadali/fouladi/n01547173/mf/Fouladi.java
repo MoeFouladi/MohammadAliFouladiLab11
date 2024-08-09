@@ -97,10 +97,10 @@ public class Fouladi extends Fragment implements OnMapReadyCallback {
                 new ActivityResultContracts.RequestPermission(),
                 isGranted -> {
                     if (isGranted) {
-                        // Permission granted, you can now show notifications
-                        showNotification("Permission granted, notifications are enabled.");
+                        Toast.makeText(getContext(), R.string.notification_permission_granted, Toast.LENGTH_SHORT).show();
+
                     } else {
-                        Toast.makeText(getContext(), "Notification  denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.notification_denied, Toast.LENGTH_SHORT).show();
                     }
                 });
 

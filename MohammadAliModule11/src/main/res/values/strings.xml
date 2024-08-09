@@ -44,6 +44,9 @@
     <string name="permission_for_notification_denied">permission for notification denied</string>
     <string name="location_channel">Location Channel</string>
     <string name="channel_for_displaying_location_addresses">Channel for displaying location addresses</string>
+    <string name="notification_denied">Notification  denied</string>
+    <string name="permission_granted_notifications_are_enabled">Permission granted, notifications are enabled.</string>
+    <string name="notification_permission_granted">Notification permission granted</string>
 
     <string-array name="websites_array">
         <item>CBC</item>
