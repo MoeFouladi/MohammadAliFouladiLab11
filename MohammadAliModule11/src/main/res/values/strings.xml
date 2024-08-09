@@ -41,6 +41,9 @@
     <string name="message_cannot_be_empty">Message cannot be empty</string>
     <string name="sms_sent">SMS sent</string>
     <string name="click_count">" Click count: "</string>
+    <string name="permission_for_notification_denied">permission for notification denied</string>
+    <string name="location_channel">Location Channel</string>
+    <string name="channel_for_displaying_location_addresses">Channel for displaying location addresses</string>
 
     <string-array name="websites_array">
         <item>CBC</item>

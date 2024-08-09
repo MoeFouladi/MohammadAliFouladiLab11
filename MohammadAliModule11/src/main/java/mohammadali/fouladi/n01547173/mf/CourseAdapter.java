@@ -56,7 +56,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, courseList.size());
         } else {
-            Log.e("CourseAdapter", "Cannot delete a course with null ID");
         }
     }
 
